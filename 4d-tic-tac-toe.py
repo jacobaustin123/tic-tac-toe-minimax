@@ -160,6 +160,11 @@ def make_move(board, player, players, depth):
 
     return 0
 
+def get_move():
+    print("Play move:")
+    move = input()
+    return list(map(int, re.findall('\d+', move)))
+
 def play_game():
     global n, m
     players = ['x', 'o']
@@ -168,19 +173,20 @@ def play_game():
 
     while True:
         n, m = 0, 0
-        print(board)
 
-        print("Play move:")
-
-        move = input()
-        moves = list(map(int, re.findall('\d+', move)))
-        board[moves[0]][moves[1]] = 'o'
         print(board)
+        while True:
+            move = get_move()
+
+            if board[move[0]][move[1]] == '':
+                board[move[0]][move[1]] ='o'
+                print(board)
+                break
+            else:
+                print("Invalid or illegal move. Please enter a different move!")
 
         if make_move(board, 'x', players, 5) == -1:
             break
-
-        print(board)
 
         if board.check_gameover() == True:
             break
